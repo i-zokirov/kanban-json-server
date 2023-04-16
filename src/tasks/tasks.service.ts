@@ -11,22 +11,24 @@ export class TasksService {
 
   async create(createTaskDto: CreateTaskDto): Promise<Task> {
     const createdTask = await this.taskModel.create(createTaskDto);
-    return createdTask.save();
+    return (await createdTask.save()).populate('section');
   }
 
   findAll() {
-    return this.taskModel.find();
+    return this.taskModel.find().populate('section');
   }
 
   findOne(id: string) {
-    return this.taskModel.findById(id);
+    return this.taskModel.findById(id).populate('section');
   }
 
   update(id: string, updateTaskDto: UpdateTaskDto) {
-    return this.taskModel.findByIdAndUpdate(id, updateTaskDto);
+    return this.taskModel
+      .findByIdAndUpdate(id, updateTaskDto)
+      .populate('section');
   }
 
   remove(id: string) {
-    return this.taskModel.findByIdAndDelete(id);
+    return this.taskModel.findByIdAndDelete(id).populate('section');
   }
 }

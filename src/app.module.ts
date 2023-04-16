@@ -1,9 +1,11 @@
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TasksModule } from './tasks/tasks.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { SectionsModule } from './sections/sections.module';
+import { APP_PIPE } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -15,8 +17,16 @@ import { MongooseModule } from '@nestjs/mongoose';
       useUnifiedTopology: true,
     }),
     TasksModule,
+    SectionsModule,
   ],
   controllers: [AppController],
-  providers: [AppService, ConfigService],
+  providers: [
+    AppService,
+    ConfigService,
+    {
+      provide: APP_PIPE,
+      useValue: new ValidationPipe({ whitelist: true }),
+    },
+  ],
 })
 export class AppModule {}
