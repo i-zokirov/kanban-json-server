@@ -24,7 +24,9 @@ export class SectionsService {
   }
 
   update(id: string, updateSectionDto: UpdateSectionDto) {
-    return this.sectionModal.findByIdAndUpdate(id, updateSectionDto);
+    return this.sectionModal.findByIdAndUpdate(id, updateSectionDto, {
+      new: true,
+    });
   }
 
   remove(id: string) {

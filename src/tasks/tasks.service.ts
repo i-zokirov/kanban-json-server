@@ -24,7 +24,7 @@ export class TasksService {
 
   update(id: string, updateTaskDto: UpdateTaskDto) {
     return this.taskModel
-      .findByIdAndUpdate(id, updateTaskDto)
+      .findByIdAndUpdate(id, updateTaskDto, { new: true })
       .populate('section');
   }
 
