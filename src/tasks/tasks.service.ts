@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task } from './schemas/task.schema';
-import { Model } from 'mongoose';
+import { FilterQuery, Model } from 'mongoose';
 
 @Injectable()
 export class TasksService {
@@ -30,5 +30,8 @@ export class TasksService {
 
   remove(id: string) {
     return this.taskModel.findByIdAndDelete(id).populate('section');
+  }
+  deleteMany(query: FilterQuery<Task>) {
+    return this.taskModel.deleteMany(query);
   }
 }

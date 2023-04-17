@@ -15,6 +15,7 @@ export class Task {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Section',
     required: true,
+    onDelete: 'CASCADE',
   })
   section: Section;
 }
