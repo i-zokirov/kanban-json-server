@@ -5,6 +5,10 @@
   "author": "Ikboljon Zokirov",
   "private": true,
   "license": "UNLICENSED",
+  "engines": {
+    "yarn": ">=1.22.0",
+    "npm": "please-use-yarn"
+  },
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -27,6 +31,7 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/mongoose": "^9.2.2",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/swagger": "^6.3.0",
     "@typegoose/typegoose": "^11.0.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",

@@ -1,23 +1,23 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
-import { Section } from '../../sections/schemas/section.schema';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+import mongoose, { HydratedDocument } from 'mongoose'
+import { Section } from '../../sections/schemas/section.schema'
 
-export type TaskDocument = HydratedDocument<Task>;
+export type TaskDocument = HydratedDocument<Task>
 
 @Schema()
 export class Task {
   @Prop({ required: true })
-  title: string;
+  title: string
   @Prop()
-  description: string;
+  description: string
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Section',
     required: true,
-    onDelete: 'CASCADE',
+    onDelete: 'CASCADE'
   })
-  section: Section;
+  section: Section
 }
 
-export const TaskSchema = SchemaFactory.createForClass(Task);
+export const TaskSchema = SchemaFactory.createForClass(Task)

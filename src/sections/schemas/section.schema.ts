@@ -1,10 +1,10 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
-export type SectionDocument = HydratedDocument<Section>;
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+import { HydratedDocument } from 'mongoose'
+export type SectionDocument = HydratedDocument<Section>
 
 @Schema()
 export class Section {
   @Prop({ required: true })
-  title: string;
+  title: string
 }
-export const SectionSchema = SchemaFactory.createForClass(Section);
+export const SectionSchema = SchemaFactory.createForClass(Section)
