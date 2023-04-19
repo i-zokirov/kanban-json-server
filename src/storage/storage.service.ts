@@ -28,7 +28,7 @@ export class StorageService {
     const file = this.storage.bucket(this.bucket).file(path)
     const stream = file.createWriteStream()
 
-    return new Promise((resolve, reject) => {
+    return await new Promise((resolve, reject) => {
       stream.on('error', (err) => {
         reject(err)
       })

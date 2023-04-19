@@ -5,6 +5,7 @@ import {
   Param,
   Post,
   Res,
+  UnsupportedMediaTypeException,
   UploadedFile,
   UseInterceptors
 } from '@nestjs/common'
@@ -20,7 +21,7 @@ export class MediaController {
     FileInterceptor('file', {
       limits: {
         files: 1,
-        fileSize: 1024 * 1024
+        fileSize: 10 * 1024 * 1024 // 10 MB limit
       },
       fileFilter: (req, file, callback) => {
         const allowedTypes = [
@@ -33,8 +34,8 @@ export class MediaController {
           callback(null, true)
         } else {
           callback(
-            new Error(
-              'Only .jpg, .jpeg, .png, .doc and .pdf files are allowed.'
+            new UnsupportedMediaTypeException(
+              "'Only .jpg, .jpeg, .png, .doc and .pdf files are allowed.'"
             ),
             false
           )
@@ -42,16 +43,22 @@ export class MediaController {
       }
     })
   )
-  uploadMedia(
+  async uploadMedia(
     @UploadedFile() file: Express.Multer.File,
-    @Body('mediaId') mediaId: string
+    @Body('mediaId') mediaId: string,
+    @Res() res: Response
   ) {
-    return this.storageService.save(
-      'media/' + mediaId + '/' + file.originalname,
-      file.mimetype,
-      file.buffer,
-      [{ mediaId: mediaId, fileName: file.originalname }]
-    )
+    try {
+      const result = await this.storageService.save(
+        'media/' + mediaId + '/' + file.originalname,
+        file.mimetype,
+        file.buffer,
+        [{ mediaId: mediaId, fileName: file.originalname }]
+      )
+      return res.status(200).send(result)
+    } catch (error) {
+      return res.status(400).send({ message: error.message })
+    }
   }
   //   @Get('/:mediaId')
   //   async downloadMedia(@Param('mediaId') mediaId: string, @Res() res: Response) {
@@ -75,6 +82,7 @@ export class MediaController {
     @Param('mediaId') mediaId: string,
     @Res() res: Response
   ) {
-    return this.storageService.listFiles('media/' + mediaId)
+    const files = await this.storageService.listFiles('media/' + mediaId)
+    res.json(files)
   }
 }
