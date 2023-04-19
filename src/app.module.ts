@@ -6,6 +6,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { MongooseModule } from '@nestjs/mongoose'
 import { SectionsModule } from './sections/sections.module'
 import { APP_PIPE } from '@nestjs/core'
+import { StorageModule } from './storage/storage.module';
+import { MediaModule } from './media/media.module';
 
 @Module({
   imports: [
@@ -17,7 +19,9 @@ import { APP_PIPE } from '@nestjs/core'
       useUnifiedTopology: true
     }),
     TasksModule,
-    SectionsModule
+    SectionsModule,
+    StorageModule,
+    MediaModule
   ],
   controllers: [AppController],
   providers: [
