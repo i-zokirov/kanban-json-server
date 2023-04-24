@@ -2,6 +2,8 @@
 
 Kanban Board API - [https://kanban-server-x25y.onrender.com](https://kanban-server-x25y.onrender.com/)
 
+![App Screenshot](/assets/api.png)
+
 ## Installation
 
 ```bash
